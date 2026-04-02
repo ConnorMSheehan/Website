@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connor M. Sheehan, Ph.D. | Sleep, Health & Social Inequality</title>
+<meta name="description" content="Associate Professor & Centennial Professor at Arizona State University. Social demographer studying sleep, health inequality, and aging.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #060a14;
+  --bg-primary: #0b1120;
+  --bg-card: #111827;
+  --bg-card-hover: #162033;
+  --text-primary: #e8eaf0;
+  --text-secondary: #8b95ad;
+  --text-dim: #5a6380;
+  --accent: #c9a84c;
+  --accent-glow: #c9a84c33;
+  --accent-soft: #c9a84c1a;
+  --blue: #5b7fb8;
+  --blue-soft: #5b7fb822;
+  --border: #1e293b;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── STARFIELD ── */
+#starfield {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(6, 10, 20, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+nav.scrolled { background: rgba(6, 10, 20, 0.95); }
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+/* ── SECTIONS ── */
+section { position: relative; z-index: 1; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 0 6rem;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-text { }
+.hero-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero-name span {
+  display: block;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-tagline {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--blue);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+.hero-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+}
+.hero-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+.btn-primary:hover {
+  background: #d4af5a;
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-photo {
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 1s 0.6s forwards;
+}
+.hero-photo img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 8px;
+  filter: grayscale(15%) contrast(1.05);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+}
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 1px solid var(--accent-glow);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* ── MOON DIVIDER ── */
+.divider {
+  text-align: center;
+  padding: 3rem 0;
+}
+.moon {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent-glow);
+  position: relative;
+}
+.moon::before, .moon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--border));
+}
+.moon::before { right: 20px; background: linear-gradient(to left, transparent, var(--border)); }
+.moon::after { left: 20px; }
+
+/* ── SECTION HEADERS ── */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+/* ── ABOUT ── */
+.about { padding: 4rem 0; }
+.about-text {
+  max-width: 800px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+.about-text strong { color: var(--text-primary); font-weight: 500; }
+
+/* ── STATS ── */
+.stats { padding: 4rem 0; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.4s;
+}
+.stat-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-glow);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.stat-number {
+  font-family: var(--serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ── RESEARCH AREAS ── */
+.research { padding: 4rem 0; }
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.research-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.4s;
+}
+.research-card:hover {
+  border-color: var(--accent-glow);
+  background: var(--bg-card-hover);
+}
+.research-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.research-card h3 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.research-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── PUBLICATIONS ── */
+.publications { padding: 4rem 0; }
+.pub-list { margin-top: 2rem; }
+.pub-item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.pub-item:first-child { border-top: 1px solid var(--border); }
+.pub-item:hover { padding-left: 1rem; }
+.pub-journal {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.pub-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  line-height: 1.4;
+}
+.pub-authors {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+}
+.pub-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.pub-tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.pub-tag.media {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.pub-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--accent);
+  text-decoration: none;
+  transition: gap 0.3s;
+}
+.pub-more:hover { gap: 0.8rem; }
+
+/* ── DATA DEVILS ── */
+.datadevils { padding: 4rem 0; }
+.dd-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+.dd-text {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.dd-text strong { color: var(--text-primary); font-weight: 500; }
+.dd-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dd-highlights li {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.dd-highlights li strong {
+  display: block;
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+/* ── MEDIA ── */
+.media { padding: 4rem 0; }
+.media-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
+}
+.media-item {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.media-item:hover { color: var(--text-primary); }
+.media-item.featured { color: var(--text-secondary); }
+
+/* ── TEACHING ── */
+.teaching { padding: 4rem 0; }
+.teaching-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.teaching-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+}
+.teaching-card h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+.teaching-card .code {
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.teaching-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── CONTACT ── */
+.contact { padding: 4rem 0 6rem; }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+.contact-info { display: flex; flex-direction: column; gap: 1rem; }
+.contact-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.contact-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  min-width: 80px;
+}
+.contact-value {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+.contact-value a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.contact-value a:hover { text-decoration: underline; }
+.contact-cta {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.contact-cta p {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  max-width: 320px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  .hero-photo { order: -1; display: flex; justify-content: center; }
+  .hero-photo img { max-width: 280px; }
+  .hero-links { justify-content: center; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .research-grid { grid-template-columns: 1fr; }
+  .dd-layout { grid-template-columns: 1fr; }
+  .teaching-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: rgba(6, 10, 20, 0.97);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .stat-card { padding: 1.2rem 1rem; }
+  .stat-number { font-size: 2rem; }
+  .container { padding: 0 1.25rem; }
+  .media-logos { gap: 1.2rem; padding: 1.5rem; }
+  .media-item { font-size: 0.95rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- STARFIELD CANVAS -->
+<canvas id="starfield"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">C.M. Sheehan</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#datadevils">Data Devils</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Arizona State University</div>
+        <h1 class="hero-name"><span>Connor M. Sheehan, Ph.D.</span></h1>
+        <p class="hero-title">Associate Professor &amp; Centennial Professor<br>T. Denny Sanford School of Social and Family Dynamics</p>
+        <p class="hero-tagline">"Studying why society keeps us up at night."</p>
+        <div class="hero-links">
+          <a href="https://scholar.google.com/citations?user=b5ACyKMAAAAJ&hl=en" target="_blank" class="btn-primary">Google Scholar ↗</a>
+          <a href="https://search.asu.edu/profile/1380530" target="_blank" class="btn-outline">ASU Profile ↗</a>
+          <a href="#contact" class="btn-outline">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="headshot.jpg" alt="Connor M. Sheehan, Ph.D." loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container reveal">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Understanding the Social Architecture of Sleep</h2>
+    <div class="about-text">
+      <p>I am a <strong>sociologist and social demographer</strong> interested in understanding social inequality in people's health. Using large nationally representative datasets and advanced quantitative methods, I systematically document how social forces shape population-level health patterns.</p>
+      <br>
+      <p>My work pursues three overlapping questions: <strong>How can enhanced measurement improve our understanding of the sociological determinants of health?</strong> What are the sociological determinants of sleep in a world undergoing rapid transformation? And how does social inequality within families influence well-being and sleep?</p>
+      <br>
+      <p>Before joining ASU, I earned my Ph.D. in Sociology from <strong>The University of Texas at Austin</strong> (specializing in Demography) and completed a postdoctoral fellowship at <strong>USC's Leonard Davis School of Gerontology</strong>, supported by the National Institute on Aging.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="container reveal">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">70+</div>
+        <div class="stat-label">Peer-Reviewed Publications</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1,150+</div>
+        <div class="stat-label">Google Scholar Citations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Students Mentored</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">25+</div>
+        <div class="stat-label">Student Co-Authored Papers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- RESEARCH -->
+<section class="research" id="research">
+  <div class="container reveal">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">Three Questions Keeping Me Up</h2>
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="research-icon">📐</div>
+        <h3>Measurement &amp; Methods</h3>
+        <p>How can enhanced measurement improve our understanding of the sociological determinants of health? I investigate how the tools we use shape what we find, from self-reported sleep categorizations to latent variable approaches to health.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">🌙</div>
+        <h3>Social Determinants of Sleep</h3>
+        <p>What are the sociological forces shaping sleep in a world undergoing rapid transformation? I study how education, neighborhoods, race/ethnicity, immigration, and political context influence sleep duration and quality at the population level.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-icon">👨‍👩‍👧</div>
+        <h3>Families &amp; Inequality</h3>
+        <p>How does social inequality within families influence well-being and sleep? From spousal education to adult children's attainment, I examine how intergenerational transfers of advantage and disadvantage ripple through health.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- PUBLICATIONS -->
+<section class="publications" id="publications">
+  <div class="container reveal">
+    <div class="section-label">Selected Publications</div>
+    <h2 class="section-title">Highlights from 70+ Articles</h2>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <div class="pub-journal">Journal of Gerontology: Social Sciences · 2024</div>
+        <div class="pub-title">An Emerging 21st-Century Midlife Sleep Crisis? Cohort Differences in Sleeping Patterns Among Americans in Midlife and Older Adulthood</div>
+        <div class="pub-authors">Sheehan, C. &amp; Infurna, F.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 6.2</span>
+          <span class="pub-tag media">PBS · Psychology Today · FOX · KTLA</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">Social Science &amp; Medicine · 2024</div>
+        <div class="pub-title">Looks and Longevity: Do Prettier People Live Longer?</div>
+        <div class="pub-authors">Sheehan, C. &amp; Hamermesh, D.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 5.4</span>
+          <span class="pub-tag media">NY Post · Times of London · Daily Mail · r/science</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">Sleep · 2019</div>
+        <div class="pub-title">Are U.S. Adults Reporting Less Sleep? Findings from Sleep Duration Trends in the National Health Interview Survey, 2004-2017</div>
+        <div class="pub-authors">Sheehan, C., Frochen, S., Walsemann, K. &amp; Ailshire, J.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 6.9</span>
+          <span class="pub-tag media">The New York Times · Science News · Smithsonian · Forbes</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">Nature Human Behaviour · 2021</div>
+        <div class="pub-title">Sleep Characteristics Across the Lifespan in 1.1 Million People from the Netherlands, United Kingdom and United States</div>
+        <div class="pub-authors">Kocevska, D. et al. (consortium author)</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 24.3</span>
+          <span class="pub-tag media">CNN · MSN</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">Medicine &amp; Science in Sports &amp; Exercise · 2020</div>
+        <div class="pub-title">Associations of Exercise Types with All-Cause Mortality among U.S. Adults</div>
+        <div class="pub-authors">Sheehan, C. &amp; Li, L.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 6.3</span>
+          <span class="pub-tag media">CBS News Radio · ASU Now · Utah Public Radio</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">American Psychologist · 2022</div>
+        <div class="pub-title">Racial Discrimination, Pubertal Timing, Neighborhoods, and Mental Health among U.S. Mexican Boys</div>
+        <div class="pub-authors">White, R., Seaton, E., Pasco, M. &amp; Sheehan, C.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 15.4</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">Sleep Health · 2024</div>
+        <div class="pub-title">Does Sleep Quality Differ Across Political Parties? Results from a Survey of Arizona Adults</div>
+        <div class="pub-authors">Sheehan, C. &amp; Martin, M.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 5.8</span>
+          <span class="pub-tag media">PsyPost</span>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-journal">Addiction · 2013</div>
+        <div class="pub-title">Gender Differences in the Presence of Drugs in Violent Deaths</div>
+        <div class="pub-authors">Sheehan, C., Rogers, R., Williams, G. &amp; Boardman, J.</div>
+        <div class="pub-meta">
+          <span class="pub-tag">IF: 7.3</span>
+        </div>
+      </div>
+
+    </div>
+    <a href="https://scholar.google.com/citations?user=b5ACyKMAAAAJ&hl=en" target="_blank" class="pub-more">
+      View all publications on Google Scholar →
+    </a>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- DATA DEVILS -->
+<section class="datadevils" id="datadevils">
+  <div class="container reveal">
+    <div class="section-label">Community Engagement</div>
+    <h2 class="section-title">Data Devils</h2>
+    <div class="dd-layout">
+      <div class="dd-text">
+        <p>I co-founded <strong>Data Devils</strong> with Dr. Aaron Flores, a community analytics initiative that pairs ASU students with Arizona nonprofits to provide data-driven insights. The program trains students in applied research while delivering real, actionable analytical support to organizations working on the front lines of social issues across the state.</p>
+        <br>
+        <p>Our work has achieved <strong>statewide visibility and external funding</strong>, with projects spanning food insecurity mapping, pet adoption outcomes, women's crisis services, and basic needs assessment. We have partnered with all four of Arizona's major food bank networks, the Arizona Board of Regents, and municipal agencies including Maricopa County Animal Control. Our food insecurity dashboard training workshop, funded by ABOR and hosted at St. Mary's Food Bank, produced a <strong>96% increase in participant confidence</strong> navigating the tool.</p>
+        <br>
+        <p>Data Devils has been featured by ASU News, Arizona PBS, KJZZ, the Arizona Board of Regents, Route Fifty, GovTech, and StateScoop.</p>
+      </div>
+      <ul class="dd-highlights">
+        <li>
+          <strong>Food Insecurity</strong>
+          Geospatial dashboard mapping food insecurity at the census tract level across Arizona, built in partnership with St. Mary's Food Bank.
+        </li>
+        <li>
+          <strong>Pet Adoption</strong>
+          Dashboard for Maricopa County Animal Control analyzing pet adoption outcomes and geographic patterns of dog licensing.
+        </li>
+        <li>
+          <strong>Women's Services</strong>
+          Quantitative analysis of Hope Women's Center usage to inform resource allocation for women in crisis.
+        </li>
+        <li>
+          <strong>Basic Needs</strong>
+          Tri-university basic needs data initiative with the Arizona Board of Regents and SHEEO.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- MEDIA -->
+<section class="media" id="media">
+  <div class="container reveal">
+    <div class="section-label">In the Press</div>
+    <h2 class="section-title">Featured In</h2>
+    <div class="media-logos">
+      <span class="media-item featured">The New York Times</span>
+      <span class="media-item featured">Science News</span>
+      <span class="media-item featured">Smithsonian</span>
+      <span class="media-item">The Times of London</span>
+      <span class="media-item featured">PBS Horizon</span>
+      <span class="media-item">NY Post</span>
+      <span class="media-item featured">Forbes</span>
+      <span class="media-item">Psychology Today</span>
+      <span class="media-item">USA Today</span>
+      <span class="media-item featured">CBS News Radio</span>
+      <span class="media-item">Daily Mail</span>
+      <span class="media-item">CNN</span>
+      <span class="media-item">Arizona NPR</span>
+      <span class="media-item">U.S. News</span>
+      <span class="media-item featured">r/science front page</span>
+      <span class="media-item">GovTech</span>
+      <span class="media-item">Route Fifty</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- TEACHING -->
+<section class="teaching" id="teaching">
+  <div class="container reveal">
+    <div class="section-label">Teaching</div>
+    <h2 class="section-title">Courses</h2>
+    <div class="teaching-grid">
+      <div class="teaching-card">
+        <div class="code">SOC 469 / GIS 469 / GIS 598</div>
+        <h3>Multivariate Statistics for the Social Sciences</h3>
+        <p>An interdisciplinary survey of quantitative methods, from regression to neural nets, taught entirely in R. Students build coding portfolios and model real data on everything from candy preferences to the Bechdel test.</p>
+      </div>
+      <div class="teaching-card">
+        <div class="code">SOC 448</div>
+        <h3>Epidemics and Society</h3>
+        <p>How social factors get "under the skin" during epidemics. Covers COVID-19, Ebola, the Black Death, and the opioid epidemic through the lens of social inequality.</p>
+      </div>
+      <div class="teaching-card">
+        <div class="code">SOC 390</div>
+        <h3>Social Statistics I</h3>
+        <p>Intro statistics with a hands-on twist. Students learn Excel, R, and how to be informed consumers of data. Final projects use real World Values Survey data.</p>
+      </div>
+      <div class="teaching-card">
+        <div class="code">Award</div>
+        <h3>Centennial Professorship (2025)</h3>
+        <p>Prestigious student-selected award for teaching excellence and leadership. Also received multiple Professor of Impact Awards and SUN Awards, and multiple nominations for the College Teaching Award.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="moon"></span></div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container reveal">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Let's Talk</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-row">
+          <span class="contact-label">Email</span>
+          <span class="contact-value"><a href="mailto:Connor.M.Sheehan@asu.edu">Connor.M.Sheehan@asu.edu</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Phone</span>
+          <span class="contact-value">(480) 965-0354</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Office</span>
+          <span class="contact-value">951 Cady Mall, Tempe, AZ 85287</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">School</span>
+          <span class="contact-value">T. Denny Sanford School of Social and Family Dynamics</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Profiles</span>
+          <span class="contact-value">
+            <a href="https://scholar.google.com/citations?user=b5ACyKMAAAAJ&hl=en" target="_blank">Google Scholar</a> · 
+            <a href="https://search.asu.edu/profile/1380530" target="_blank">ASU Directory</a>
+          </span>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <p>Interested in collaboration, graduate study, or Data Devils partnerships?</p>
+        <a href="mailto:Connor.M.Sheehan@asu.edu" class="btn-primary">Send an Email →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Connor M. Sheehan. Arizona State University.</p>
+</footer>
+
+<script>
+// ── STARFIELD ──
+(function() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const STAR_COUNT = 200;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function init() {
+    resize();
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.3,
+        opacity: Math.random() * 0.6 + 0.1,
+        pulse: Math.random() * 0.02 + 0.005,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const opacity = s.opacity + Math.sin(t * s.pulse + s.phase) * 0.15;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200, 210, 240, ${Math.max(0.05, opacity)})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  init();
+  requestAnimationFrame(draw);
+})();
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── HAMBURGER ──
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// ── REVEAL ON SCROLL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
